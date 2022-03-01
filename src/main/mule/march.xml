@@ -17,9 +17,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-	"name": "Syam Kumar",
-	"age": 21,
-	"location": "Ongole",
+	"message": "processed successfully",
 	"status": "Active"
 }]]></ee:set-payload>
 			</ee:message>
