@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="86367704-b26a-4244-940f-81eb92fbf540" >
+		<http:listener-connection host="0.0.0.0" port="8090" />
+	</http:listener-config>
+	<flow name="marchFlow" doc:id="68ec191e-52fc-4a48-b734-9db190ec079e" >
+		<http:listener doc:name="Listener" doc:id="863c1b47-c24a-4aeb-9033-160a7fb40d0e" config-ref="HTTP_Listener_config" path="/march"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f9223104-8e18-45bb-8fb5-b2f79b10b507" message="flow started..."/>
+		<ee:transform doc:name="Transform Message" doc:id="3108eb4f-d12b-45ed-a5f8-dedfddcb80d2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"name": "Syam Kumar",
+	"age": 21,
+	"location": "Ongole",
+	"status": "Active"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="fb3c1a8c-f39b-4839-a588-a485a6f15ae9" message="#[payload]"/>
+	</flow>
+</mule>
